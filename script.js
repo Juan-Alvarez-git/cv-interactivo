@@ -1,4 +1,4 @@
-const strengths = [
+const Strengths = [
   {
     id: "design",
     title: "Diseño de pruebas",
@@ -91,7 +91,7 @@ const strengths = [
   }
 ];
 
-const scenarios = [
+const Scenarios = [
   {
     id: "recovery",
     label: "Recuperación",
@@ -150,7 +150,7 @@ Scenario: Usuario intenta acceder con proveedor distinto al original
   }
 ];
 
-const keyContributions = [
+const KeyContributions = [
   {
     label: "Análisis funcional",
     title: "Detección temprana de riesgos",
@@ -201,7 +201,7 @@ const keyContributions = [
   }
 ];
 
-const workflow = [
+const WorkflowSteps = [
   {
     step: "01",
     title: "Analizo requerimientos y detecto riesgos",
@@ -234,44 +234,44 @@ const workflow = [
   }
 ];
 
-const state = {
-  selectedStrength: strengths[0].id,
-  selectedScenario: scenarios[0].id
+const State = {
+  SelectedStrength: Strengths[0].id,
+  SelectedScenario: Scenarios[0].id
 };
 
-const controlList = document.querySelector("#control-list");
-const controlPanel = document.querySelector("#control-panel");
-const scenarioTabs = document.querySelector("#scenario-tabs");
-const gherkinCode = document.querySelector("#gherkin-code");
-const criteriaList = document.querySelector("#criteria-list");
-const bugGrid = document.querySelector("#bug-grid");
-const timeline = document.querySelector("#timeline");
+const ControlList = document.querySelector("#control-list");
+const ControlPanel = document.querySelector("#control-panel");
+const ScenarioTabs = document.querySelector("#scenario-tabs");
+const GherkinCode = document.querySelector("#gherkin-code");
+const CriteriaList = document.querySelector("#criteria-list");
+const BugGrid = document.querySelector("#bug-grid");
+const Timeline = document.querySelector("#timeline");
 
 function renderStrengths() {
-  controlList.innerHTML = strengths
+  ControlList.innerHTML = Strengths
     .map(
-      (item) => `
-        <button class="control-button ${item.id === state.selectedStrength ? "active" : ""}" data-id="${item.id}">
-          <strong>${item.title}</strong>
-          <span>${item.summary}</span>
+      (Item) => `
+        <button class="control-button ${Item.id === State.SelectedStrength ? "active" : ""}" data-id="${Item.id}">
+          <strong>${Item.title}</strong>
+          <span>${Item.summary}</span>
         </button>
       `
     )
     .join("");
 
-  const current = strengths.find((item) => item.id === state.selectedStrength);
+  const CurrentStrength = Strengths.find((Item) => Item.id === State.SelectedStrength);
 
-  controlPanel.innerHTML = `
+  ControlPanel.innerHTML = `
     <p class="section-tag">Capacidad activa</p>
-    <h3>${current.title}</h3>
-    <p>${current.description}</p>
+    <h3>${CurrentStrength.title}</h3>
+    <p>${CurrentStrength.description}</p>
 
     <div class="meta-row">
-      ${current.evidence
+      ${CurrentStrength.evidence
         .map(
-          (entry) => `
+          (Entry) => `
             <div class="meta-chip">
-              <span class="meta-title">${entry}</span>
+              <span class="meta-title">${Entry}</span>
             </div>
           `
         )
@@ -282,61 +282,61 @@ function renderStrengths() {
       <section class="panel-box">
         <span class="meta-title">Lo que entrego</span>
         <ul>
-          ${current.deliverables.map((item) => `<li>${item}</li>`).join("")}
+          ${CurrentStrength.deliverables.map((Item) => `<li>${Item}</li>`).join("")}
         </ul>
       </section>
       <section class="panel-box">
         <span class="meta-title">Valor para el equipo</span>
         <ul>
-          ${current.impact.map((item) => `<li>${item}</li>`).join("")}
+          ${CurrentStrength.impact.map((Item) => `<li>${Item}</li>`).join("")}
         </ul>
       </section>
     </div>
   `;
 
-  controlList.querySelectorAll(".control-button").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.selectedStrength = button.dataset.id;
+  ControlList.querySelectorAll(".control-button").forEach((Button) => {
+    Button.addEventListener("click", () => {
+      State.SelectedStrength = Button.dataset.id;
       renderStrengths();
     });
   });
 }
 
 function renderScenarios() {
-  scenarioTabs.innerHTML = scenarios
+  ScenarioTabs.innerHTML = Scenarios
     .map(
-      (scenario) => `
-        <button class="scenario-tab ${scenario.id === state.selectedScenario ? "active" : ""}" data-id="${scenario.id}">
-          ${scenario.label}
+      (Scenario) => `
+        <button class="scenario-tab ${Scenario.id === State.SelectedScenario ? "active" : ""}" data-id="${Scenario.id}">
+          ${Scenario.label}
         </button>
       `
     )
     .join("");
 
-  const current = scenarios.find((scenario) => scenario.id === state.selectedScenario);
-  gherkinCode.textContent = current.code;
-  criteriaList.innerHTML = current.criteria.map((item) => `<li>${item}</li>`).join("");
+  const CurrentScenario = Scenarios.find((Scenario) => Scenario.id === State.SelectedScenario);
+  GherkinCode.textContent = CurrentScenario.code;
+  CriteriaList.innerHTML = CurrentScenario.criteria.map((Item) => `<li>${Item}</li>`).join("");
 
-  scenarioTabs.querySelectorAll(".scenario-tab").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.selectedScenario = button.dataset.id;
+  ScenarioTabs.querySelectorAll(".scenario-tab").forEach((Button) => {
+    Button.addEventListener("click", () => {
+      State.SelectedScenario = Button.dataset.id;
       renderScenarios();
     });
   });
 }
 
 function renderBugStories() {
-  bugGrid.innerHTML = keyContributions
+  BugGrid.innerHTML = KeyContributions
     .map(
-      (item) => `
+      (Item) => `
         <article class="bug-card glass-card">
           <div class="bug-topline">
-            <span class="bug-label">${item.label}</span>
+            <span class="bug-label">${Item.label}</span>
           </div>
-          <h3>${item.title}</h3>
-          <p>${item.summary}</p>
+          <h3>${Item.title}</h3>
+          <p>${Item.summary}</p>
           <ul class="bug-detail-list">
-            ${item.details.map((detail) => `<li>${detail}</li>`).join("")}
+            ${Item.details.map((Detail) => `<li>${Detail}</li>`).join("")}
           </ul>
         </article>
       `
@@ -345,13 +345,13 @@ function renderBugStories() {
 }
 
 function renderWorkflow() {
-  timeline.innerHTML = workflow
+  Timeline.innerHTML = WorkflowSteps
     .map(
-      (item) => `
+      (Item) => `
         <article class="timeline-card">
-          <span class="timeline-step">Paso ${item.step}</span>
-          <h3>${item.title}</h3>
-          <p>${item.text}</p>
+          <span class="timeline-step">Paso ${Item.step}</span>
+          <h3>${Item.title}</h3>
+          <p>${Item.text}</p>
         </article>
       `
     )
@@ -359,38 +359,38 @@ function renderWorkflow() {
 }
 
 function animateCounters() {
-  const counters = document.querySelectorAll(".counter");
+  const Counters = document.querySelectorAll(".counter");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
+  const Observer = new IntersectionObserver(
+    (Entries) => {
+      Entries.forEach((Entry) => {
+        if (!Entry.isIntersecting) {
           return;
         }
 
-        const element = entry.target;
-        const target = Number(element.dataset.target);
-        let value = 0;
-        const increment = Math.max(1, Math.ceil(target / 28));
+        const Element = Entry.target;
+        const TargetValue = Number(Element.dataset.target);
+        let CurrentValue = 0;
+        const Increment = Math.max(1, Math.ceil(TargetValue / 28));
 
-        const timer = window.setInterval(() => {
-          value += increment;
-          if (value >= target) {
-            element.textContent = `${target}${target === 100 ? "%" : ""}`;
-            window.clearInterval(timer);
+        const Timer = window.setInterval(() => {
+          CurrentValue += Increment;
+          if (CurrentValue >= TargetValue) {
+            Element.textContent = `${TargetValue}${TargetValue === 100 ? "%" : ""}`;
+            window.clearInterval(Timer);
             return;
           }
 
-          element.textContent = `${value}${target === 100 ? "%" : ""}`;
+          Element.textContent = `${CurrentValue}${TargetValue === 100 ? "%" : ""}`;
         }, 38);
 
-        observer.unobserve(element);
+        Observer.unobserve(Element);
       });
     },
     { threshold: 0.55 }
   );
 
-  counters.forEach((counter) => observer.observe(counter));
+  Counters.forEach((Counter) => Observer.observe(Counter));
 }
 
 renderStrengths();
